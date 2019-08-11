@@ -1,13 +1,7 @@
 package com.example.travelmantics.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,6 +15,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.travelmantics.Model.TravelDeal;
 import com.example.travelmantics.R;
 import com.example.travelmantics.Utils.FirebaseUtil;
@@ -28,7 +27,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.StorageReference;
@@ -36,8 +34,6 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
-
-import java.util.Objects;
 
 public class NewTravelDealActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase;
@@ -148,7 +144,7 @@ public class NewTravelDealActivity extends AppCompatActivity {
     }
 
     private void backToTravelListActivity() {
-        startActivity(new Intent(getApplicationContext(), TravelDealListActivity.class));
+        startActivity(new Intent(this, TravelDealListActivity.class));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -178,7 +174,7 @@ public class NewTravelDealActivity extends AppCompatActivity {
             });
         } else {
             final StorageReference filePath = storageReference.child("deals_pictures")
-                    .child((Objects.requireNonNull(imageURI.getLastPathSegment())));
+                    .child(imageURI.getLastPathSegment());
             filePath.putFile(imageURI).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onComplete(@NonNull final Task<UploadTask.TaskSnapshot> task) {
@@ -222,7 +218,7 @@ public class NewTravelDealActivity extends AppCompatActivity {
 
     private void deleteDeal() {
         if (travelDeal.getId() == null) {
-            Toast.makeText(getApplicationContext(), "Save the deal before deleting", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Save the deal before deleting", Toast.LENGTH_SHORT).show();
             return;
         } else {
             final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);

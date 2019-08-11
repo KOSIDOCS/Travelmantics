@@ -1,7 +1,5 @@
 package com.example.travelmantics.Utils;
 
-import android.app.Activity;
-import android.app.ListActivity;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -9,6 +7,7 @@ import androidx.annotation.Nullable;
 
 import com.example.travelmantics.Activities.TravelDealListActivity;
 import com.example.travelmantics.Model.TravelDeal;
+import com.example.travelmantics.R;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -56,11 +55,12 @@ public class FirebaseUtil {
                         String userID = firebaseAuth.getUid();
                         checkIfAdmin(userID);
                     }
+                    Toast.makeText(callerActivity.getBaseContext(), "Welcome back!", Toast.LENGTH_LONG).show();
                 }
             };
             connectStorage();
         }
-        travelDealArrayList = new ArrayList<>();
+        travelDealArrayList = new ArrayList<TravelDeal>();
         databaseReference = firebaseDatabase.getReference().child(reference);
     }
 
@@ -114,6 +114,8 @@ public class FirebaseUtil {
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
                         .setIsSmartLockEnabled(false)
+                        .setTheme(R.style.LoginTheme)
+                        .setLogo(R.mipmap.watch)
                         .build(),
                 RC_SIGN_IN);
     }
